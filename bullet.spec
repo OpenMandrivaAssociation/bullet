@@ -4,7 +4,7 @@
 Summary:	Professional 3D collision detection library
 Name:		bullet
 Version:	2.53
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	Zlib
 Group:		System/Libraries
 Url:		http://www.continuousphysics.com/Bullet/index.html
@@ -31,6 +31,8 @@ for games and animation.
 %package -n %{develname}
 Summary:	Development headers for bullet
 Group:		Development/C
+Provides:	%{name}-devel = %{version}-%{release}
+Provides:	lib%{name}-devel = %{version}-%{release}
 Requires:	%{staticname} = %{version}-%{release}
 
 %description -n %{develname}
