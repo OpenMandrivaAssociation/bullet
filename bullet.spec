@@ -3,7 +3,7 @@
 
 Summary:	Professional 3D collision detection library
 Name:		bullet
-Version:	2.56
+Version:	2.63
 Release:	%mkrel 1
 License:	Zlib
 Group:		System/Libraries
@@ -11,7 +11,7 @@ Url:		http://www.continuousphysics.com/Bullet/index.html
 Source0:	http://downloads.sourceforge.net/bullet/%{name}-%{version}.tar.bz2
 BuildRequires:	doxygen
 BuildRequires:	mesa-common-devel
-BuildRequires:	jam
+BuildRequires:	ftjam
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
 %description
@@ -41,9 +41,12 @@ Development headers for bullet.
 %prep
 %setup -q
 
+%ifarch x86_64
+sed -i -e 's|(unsigned)|(unsigned long)|g' src/BulletCollision/CollisionShapes/btOptimizedBvh.cpp
+%endif
+
 %build
 %configure2_5x \
-	--with-x \
 	--with-mesa
 
 jam -d2
