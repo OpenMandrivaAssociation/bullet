@@ -12,7 +12,6 @@ Source0:	http://downloads.sourceforge.net/bullet/%{name}-%{version}.tar.bz2
 BuildRequires:	doxygen
 BuildRequires:	mesa-common-devel
 BuildRequires:	ftjam
-BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
 %description
 Bullet is a professional open source multi-threaded 
