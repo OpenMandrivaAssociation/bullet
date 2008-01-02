@@ -9,9 +9,11 @@ License:	Zlib
 Group:		System/Libraries
 Url:		http://www.continuousphysics.com/Bullet/index.html
 Source0:	http://downloads.sourceforge.net/bullet/%{name}-%{version}.tar.bz2
+Patch0:		%{name}-2.66-btQuickprof-header.patch
 BuildRequires:	doxygen
 BuildRequires:	mesa-common-devel
 BuildRequires:	ftjam
+BuildRequires:	libtool
 
 %description
 Bullet is a professional open source multi-threaded 
@@ -39,15 +41,21 @@ Development headers for bullet.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %ifarch x86_64
 sed -i -e 's|(unsigned)|(unsigned long)|g' src/BulletCollision/CollisionShapes/btOptimizedBvh.cpp
 %endif
 
 %build
+./autogen.sh
+
 %configure2_5x \
 	--with-mesa
+sed -i -e 's|SubInclude TOP Demos ;|#SubInclude TOP Demos ;|g' Jamfile
+jam -d2 %_smp_mflags
 
+sed -i -e 's|#SubInclude TOP Demos ;|SubInclude TOP Demos ;|g' Jamfile
 jam -d2
 
 %install
