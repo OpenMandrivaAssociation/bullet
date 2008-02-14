@@ -7,6 +7,7 @@ Version:	2.66
 Release:	%mkrel 1
 License:	Zlib
 Group:		System/Libraries
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Url:		http://www.continuousphysics.com/Bullet/index.html
 Source0:	http://downloads.sourceforge.net/bullet/%{name}-%{version}.tar.bz2
 Patch0:		%{name}-2.66-btQuickprof-header.patch
