@@ -1,71 +1,144 @@
+%define major 2
+%define libname %mklibname %{name} %{major}
 %define develname %mklibname %{name} -d
 %define staticname %mklibname %{name} -d -s
 
 Summary:	Professional 3D collision detection library
 Name:		bullet
-Version:	2.66
+Version:	2.67
 Release:	%mkrel 1
 License:	Zlib
 Group:		System/Libraries
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Url:		http://www.continuousphysics.com/Bullet/index.html
-Source0:	http://downloads.sourceforge.net/bullet/%{name}-%{version}.tar.bz2
-Patch0:		%{name}-2.66-btQuickprof-header.patch
+Source0:	http://bullet.googlecode.com/files/bullet-%{version}.tgz
+Patch1:		%{name}-2.67-shared-libraries.patch
+Patch2:		%{name}-2.67-x86_64-fixes.patch
+Patch3:		%{name}-2.67-use-system-libxml2.patch
 BuildRequires:	doxygen
 BuildRequires:	mesa-common-devel
 BuildRequires:	ftjam
 BuildRequires:	libtool
+BuildRequires:	libxml2-devel
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 Bullet is a professional open source multi-threaded 
 3D Collision Detection and Rigid Body Dynamics Library
 for games and animation.
 
-%package -n %{staticname}
-Summary:	Professional 3D collision detection library
-Group:		Development/C
+%package demo
+Summary:	A demo programs using bullet library
+Group:		Graphics
+Requires:	%{libname} = %{version}-%{release}
 
-%description -n %{staticname}
+%description demo
+A demo programs using bullet library.
+
+%package -n %{libname}
+Summary:	Professional 3D collision detection library
+Group:		System/Libraries
+
+%description -n %{libname}
 Bullet is a professional open source multi-threaded 
 3D Collision Detection and Rigid Body Dynamics Library
 for games and animation.
+
+%package -n %{staticname}
+Summary:	Static libraries for %{name}
+Group:		Development/C
+Requires:	%{develname} = %{version}-%{release}
+
+%description -n %{staticname}
+Static libraries for %{name}.
 
 %package -n %{develname}
 Summary:	Development headers for bullet
 Group:		Development/C
 Provides:	%{name}-devel = %{version}-%{release}
 Provides:	lib%{name}-devel = %{version}-%{release}
-Requires:	%{staticname} = %{version}-%{release}
+Requires:	%{libname} = %{version}-%{release}
 
 %description -n %{develname}
-Development headers for bullet.
+Development headers for bullet 3D collision library.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch1 -p1
+%patch3 -p1
 
-%ifarch x86_64
-sed -i -e 's|(unsigned)|(unsigned long)|g' src/BulletCollision/CollisionShapes/btOptimizedBvh.cpp
+%ifnarch ix86
+%patch2 -p1
 %endif
 
+chmod +x configure
+
+pushd mk/autoconf
+chmod +x *
+popd
+
+# get rid of no newline ... warnings
+echo "" >> src/BulletCollision/BroadphaseCollision/btOverlappingPairCallback.h
+echo "" >> src/BulletCollision/NarrowPhaseCollision/btRaycastCallback.cpp
+
+#(tpg) use system libxml2
+rm -rf Extras/LibXML
+
 %build
+#(tpg) export USE_ADDR64 only for x86_64, otherwise build fails, use system libxml2
+%ifnarch ix86
+export CFLAGS="%{optflags} -fno-strict-aliasing -DUSE_ADDR64 -I%{_includedir}/libxml2"
+%else
+export CFLAGS="%{optflags} -fno-strict-aliasing -I%{_includedir}/libxml2"
+%endif
+export CXXFLAGS=$CFLAGS
+export LDFLAGS="-lxml2"
+
 ./autogen.sh
+
 
 %configure2_5x \
 	--with-mesa
-sed -i -e 's|SubInclude TOP Demos ;|#SubInclude TOP Demos ;|g' Jamfile
-jam -d2 %_smp_mflags
 
+# parallel build of demos is broken ...
+# ... so build first library
+sed -i -e 's|SubInclude TOP Demos ;|#SubInclude TOP Demos ;|g' Jamfile
+jam -d2 %{_smp_mflags}
+
+# ... and then demos
 sed -i -e 's|#SubInclude TOP Demos ;|SubInclude TOP Demos ;|g' Jamfile
 jam -d2
+
+#(tpg) build shared libraries
+pushd lib
+sed -i -e 's/sover/%{version}/g' Makefile
+%make
+popd
 
 %install
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 
-DESTDIR=%{buildroot} jam -d2 install
+jam -d2 install DESTDIR=%{buildroot} 
+
+install -dm 755 %{buildroot}%{_bindir}
+
+demos=`ls -1 *Demo`
+for i in $demos AllBulletDemos ContinuousConvexCollision BulletDino Raytracer UserCollisionAlgorithm; do
+    install -m 755 $i %{buildroot}%{_bindir}/bullet-$i
+done
+
+#(tpg) install shared libraries
+cp -f lib/*.so* %{buildroot}%{_libdir}
 
 %clean
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
+
+%files demo
+%defattr(-,root,root)
+%{_bindir}/%{name}-*
+
+%files -n %{libname}
+%defattr(-,root,root)
+%{_libdir}/*.so.%{major}*
 
 %files -n %{staticname}
 %defattr(-,root,root)
@@ -77,5 +150,6 @@ DESTDIR=%{buildroot} jam -d2 install
 %defattr(-,root,root)
 %doc AUTHORS README LICENSE ChangeLog.txt NEWS VERSION *.pdf
 %dir %{_includedir}/%{name}
+%{_libdir}/*.so
 %{_includedir}/%{name}/*
 %{_libdir}/pkgconfig/%{name}.pc
