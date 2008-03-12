@@ -6,7 +6,7 @@
 Summary:	Professional 3D collision detection library
 Name:		bullet
 Version:	2.67
-Release:	%mkrel 2
+Release:	%mkrel 3
 License:	Zlib
 Group:		System/Libraries
 Url:		http://www.continuousphysics.com/Bullet/index.html
@@ -128,6 +128,13 @@ done
 
 #(tpg) install shared libraries
 cp -f lib/*.so* %{buildroot}%{_libdir}
+
+#(tpg) add symlinks
+pushd %{buildroot}%{_libdir}
+for i in libbulletcollision libbulletdynamics libbulletmath; do
+ln -s $i.so.%{major}* $i.so
+done
+popd
 
 %post -n %{libname} -p /sbin/ldconfig
 
