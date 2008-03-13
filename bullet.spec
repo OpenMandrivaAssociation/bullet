@@ -6,7 +6,7 @@
 Summary:	Professional 3D collision detection library
 Name:		bullet
 Version:	2.67
-Release:	%mkrel 3
+Release:	%mkrel 4
 License:	Zlib
 Group:		System/Libraries
 Url:		http://www.continuousphysics.com/Bullet/index.html
@@ -43,14 +43,6 @@ Bullet is a professional open source multi-threaded
 3D Collision Detection and Rigid Body Dynamics Library
 for games and animation.
 
-%package -n %{staticname}
-Summary:	Static libraries for %{name}
-Group:		Development/C
-Requires:	%{develname} = %{version}-%{release}
-
-%description -n %{staticname}
-Static libraries for %{name}.
-
 %package -n %{develname}
 Summary:	Development headers for bullet
 Group:		Development/C
@@ -60,6 +52,16 @@ Requires:	%{libname} = %{version}-%{release}
 
 %description -n %{develname}
 Development headers for bullet 3D collision library.
+
+%package -n %{staticname}
+Summary:	Static libraries for %{name}
+Group:		Development/C
+Requires:	%{develname} = %{version}-%{release}
+Provides:	lib%{name}-static-devel = %{version}-%{release}
+Provides:	%{name}-static-devel = %{version}-%{release}
+
+%description -n %{staticname}
+Static libraries for %{name}.
 
 %prep
 %setup -q
