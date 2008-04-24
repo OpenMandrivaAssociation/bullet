@@ -9,7 +9,7 @@ Version:	2.68
 Release:	%mkrel 1
 License:	Zlib
 Group:		System/Libraries
-Url:		http://www.continuousphysics.com/Bullet/index.html
+Url:		http://www.bulletphysics.com
 Source0:	http://bullet.googlecode.com/files/bullet-%{version}.tgz
 Patch1:		%{name}-2.67-shared-libraries.patch
 Patch2:		%{name}-2.67-x86_64-fixes.patch
