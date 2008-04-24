@@ -13,12 +13,14 @@ Url:		http://www.continuousphysics.com/Bullet/index.html
 Source0:	http://bullet.googlecode.com/files/bullet-%{version}.tgz
 Patch1:		%{name}-2.67-shared-libraries.patch
 Patch2:		%{name}-2.67-x86_64-fixes.patch
-Patch3:		%{name}-2.67-use-system-libxml2.patch
+Patch3:		%{name}-2.68-use-system-libxml2.patch
 BuildRequires:	doxygen
 BuildRequires:	mesa-common-devel
 BuildRequires:	ftjam
 BuildRequires:	libtool
 BuildRequires:	libxml2-devel
+BuildRequires:	graphviz
+BuildRequires:	perl-Template-Toolkit
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
@@ -49,6 +51,7 @@ Group:		Development/C
 Provides:	%{name}-devel = %{version}-%{release}
 Provides:	lib%{name}-devel = %{version}-%{release}
 Requires:	%{libname} = %{version}-%{release}
+Requires:	libxml2-devel
 
 %description -n %{develname}
 Development headers for bullet 3D collision library.
@@ -81,6 +84,17 @@ popd
 # get rid of no newline ... warnings
 echo "" >> src/BulletCollision/BroadphaseCollision/btOverlappingPairCallback.h
 echo "" >> src/BulletCollision/NarrowPhaseCollision/btRaycastCallback.cpp
+echo "" >> src/BulletSoftBody/btSoftBodyRigidBodyCollisionConfiguration.cpp
+echo "" >> src/BulletCollision/CollisionShapes/btTriangleMesh.cpp
+echo "" >> src/LinearMath/btHashMap.h
+echo "" >> Extras/BulletColladaConverter/ColladaConverter.cpp
+echo "" >> Demos/AllBulletDemos/../DynamicControlDemo/MotorDemo.cpp
+echo "" >> src/LinearMath/btHashMap.h
+echo "" >> Demos/Benchmarks/main.cpp
+echo "" >> src/LinearMath/btHashMap.h
+echo "" >> Demos/BasicDemo/main.cpp
+echo "" >> src/LinearMath/btHashMap.h
+
 
 #(tpg) use system libxml2
 rm -rf Extras/LibXML
@@ -88,15 +102,14 @@ rm -rf Extras/LibXML
 %build
 #(tpg) export USE_ADDR64 only for x86_64, otherwise build fails, use system libxml2
 %ifnarch ix86
-export CFLAGS="%{optflags} -fno-strict-aliasing -DUSE_ADDR64 -I%{_includedir}/libxml2"
+export CFLAGS="%{optflags} -fno-strict-aliasing -DUSE_ADDR64 -I%{_includedir} -I%{_includedir}/libxml2"
 %else
-export CFLAGS="%{optflags} -fno-strict-aliasing -I%{_includedir}/libxml2"
+export CFLAGS="%{optflags} -fno-strict-aliasing -I%{_includedir} -I%{_includedir}/libxml2"
 %endif
 export CXXFLAGS=$CFLAGS
-export LDFLAGS="-lxml2"
+export LDFLAGS="%{optflags} -lxml2"
 
 ./autogen.sh
-
 
 %configure2_5x \
 	--with-mesa
@@ -158,6 +171,7 @@ popd
 %{_libdir}/libbulletcollision.a
 %{_libdir}/libbulletdynamics.a
 %{_libdir}/libbulletmath.a
+%{_libdir}/libbulletsoftbody.a
 	 
 %files -n %{develname}
 %defattr(-,root,root)
