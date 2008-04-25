@@ -6,12 +6,12 @@
 Summary:	Professional 3D collision detection library
 Name:		bullet
 Version:	2.68
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	Zlib
 Group:		System/Libraries
 Url:		http://www.bulletphysics.com
 Source0:	http://bullet.googlecode.com/files/bullet-%{version}.tgz
-Patch1:		%{name}-2.67-shared-libraries.patch
+Patch1:		%{name}-2.68-shared-libraries.patch
 Patch2:		%{name}-2.67-x86_64-fixes.patch
 Patch3:		%{name}-2.68-use-system-libxml2.patch
 BuildRequires:	doxygen
@@ -94,7 +94,6 @@ echo "" >> Demos/Benchmarks/main.cpp
 echo "" >> src/LinearMath/btHashMap.h
 echo "" >> Demos/BasicDemo/main.cpp
 echo "" >> src/LinearMath/btHashMap.h
-
 
 #(tpg) use system libxml2
 rm -rf Extras/LibXML
