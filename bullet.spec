@@ -5,12 +5,12 @@
 
 Summary:	Professional 3D collision detection library
 Name:		bullet
-Version:	2.70
-Release:	%mkrel 2
+Version:	2.71
+Release:	%mkrel 1
 License:	Zlib
 Group:		System/Libraries
 Url:		http://www.bulletphysics.com
-Source0:	http://bullet.googlecode.com/files/bullet-%{version}.tgz
+Source0:	http://bullet.googlecode.com/files/%{name}-%{version}-SDK.tgz
 Patch1:		%{name}-2.68-shared-libraries.patch
 Patch2:		%{name}-2.70-x86_64-fixes.patch
 Patch3:		%{name}-2.68-use-system-libxml2.patch
@@ -41,9 +41,30 @@ Summary:	Professional 3D collision detection library
 Group:		System/Libraries
 
 %description -n %{libname}
-Bullet is a professional open source multi-threaded 
-3D Collision Detection and Rigid Body Dynamics Library
-for games and animation.
+Bullet 3D Game Multiphysics Library provides state of the art 
+collision detection, soft body and rigid body dynamics.
+
+* Used by many game companies in AAA titles on Playstation 3, 
+  XBox 360, Nintendo Wii and PC
+* Modular extendible C++ design with hot-swap of most components
+* Optimized back-ends with multi-threaded support for Playstation 3 
+  Cell SPU and other platforms
+* Discrete and continuous collision detection (CCD)
+* Swept collision queries
+* Ray casting with custom collision filtering
+* Generic convex support (using GJK), capsule, cylinder, cone, sphere, 
+  box and non-convex triangle meshes. 
+* Rigid body dynamics including constraint solvers, generic 
+  constraints, ragdolls, hinge, ball-socket
+* Support for constraint limits and motors
+* Soft body support including cloth, rope and deformable
+* Bullet is integrated into Blender 3D and provides a Maya Plugin
+* Supports import and export into COLLADA 1.4 Physics format
+* Support for dynamic deformation of non-convex triangle meshes, by 
+  refitting the acceleration structures 
+
+The Library is free for commercial use and open source 
+under the ZLib License.
 
 %package -n %{develname}
 Summary:	Development headers for bullet
