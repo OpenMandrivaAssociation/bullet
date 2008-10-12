@@ -5,12 +5,12 @@
 
 Summary:	Professional 3D collision detection library
 Name:		bullet
-Version:	2.71
+Version:	2.72
 Release:	%mkrel 1
 License:	Zlib
 Group:		System/Libraries
 Url:		http://www.bulletphysics.com
-Source0:	http://bullet.googlecode.com/files/%{name}-%{version}-SDK.tgz
+Source0:	http://bullet.googlecode.com/files/%{name}-%{version}.tgz
 Patch1:		%{name}-2.68-shared-libraries.patch
 Patch2:		%{name}-2.70-x86_64-fixes.patch
 Patch3:		%{name}-2.68-use-system-libxml2.patch
@@ -95,12 +95,6 @@ Static libraries for %{name}.
 %ifnarch ix86
 %patch2 -p1
 %endif
-
-chmod +x configure
-
-pushd mk/autoconf
-chmod +x *
-popd
 
 # get rid of no newline ... warnings
 echo "" >> src/BulletCollision/BroadphaseCollision/btOverlappingPairCallback.h
@@ -199,7 +193,7 @@ popd
 	 
 %files -n %{develname}
 %defattr(-,root,root)
-%doc AUTHORS README LICENSE ChangeLog.txt NEWS VERSION *.pdf
+%doc AUTHORS README LICENSE ChangeLog NEWS VERSION *.pdf
 %dir %{_includedir}/%{name}
 %{_libdir}/*.so
 %{_includedir}/%{name}/*
