@@ -5,18 +5,17 @@
 
 Summary:	Professional 3D collision detection library
 Name:		bullet
-Version:	2.72
+Version:	2.73
 Release:	%mkrel 1
 License:	Zlib
 Group:		System/Libraries
 Url:		http://www.bulletphysics.com
-Source0:	http://bullet.googlecode.com/files/%{name}-%{version}.tgz
+Source0:	http://bullet.googlecode.com/files/%{name}-%{version}-sp1.tgz
 Patch1:		%{name}-2.68-shared-libraries.patch
-Patch2:		%{name}-2.70-x86_64-fixes.patch
-Patch3:		%{name}-2.68-use-system-libxml2.patch
+Patch3:		%{name}-2.73-use-system-libxml2.patch
 BuildRequires:	doxygen
 BuildRequires:	mesa-common-devel
-BuildRequires:	ftjam
+BuildRequires:	jam
 BuildRequires:	libtool
 BuildRequires:	libxml2-devel
 BuildRequires:	graphviz
@@ -92,10 +91,6 @@ Static libraries for %{name}.
 %patch1 -p1
 %patch3 -p1
 
-%ifnarch ix86
-%patch2 -p1
-%endif
-
 # get rid of no newline ... warnings
 echo "" >> src/BulletCollision/BroadphaseCollision/btOverlappingPairCallback.h
 echo "" >> src/BulletCollision/NarrowPhaseCollision/btRaycastCallback.cpp
@@ -114,6 +109,9 @@ echo "" >> src/LinearMath/btHashMap.h
 rm -rf Extras/LibXML
 
 %build
+%define Werror_cflags %nil
+%define _disable_ld_no_udefined 1
+
 #(tpg) export USE_ADDR64 only for x86_64, otherwise build fails, use system libxml2
 %ifnarch ix86
 export CFLAGS="%{optflags} -fno-strict-aliasing -DUSE_ADDR64 -I%{_includedir} -I%{_includedir}/libxml2"
@@ -121,7 +119,7 @@ export CFLAGS="%{optflags} -fno-strict-aliasing -DUSE_ADDR64 -I%{_includedir} -I
 export CFLAGS="%{optflags} -fno-strict-aliasing -I%{_includedir} -I%{_includedir}/libxml2"
 %endif
 export CXXFLAGS=$CFLAGS
-export LDFLAGS="%{optflags} -lxml2"
+export LDFLAGS="%{ldflags} -lxml2"
 
 ./autogen.sh
 
@@ -160,7 +158,7 @@ cp -f lib/*.so* %{buildroot}%{_libdir}
 
 #(tpg) add symlinks
 pushd %{buildroot}%{_libdir}
-for i in libbulletcollision libbulletdynamics libbulletmath; do
+for i in lib* ; do
 ln -s $i.so.%{major}* $i.so
 done
 popd
