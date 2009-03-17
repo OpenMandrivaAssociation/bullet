@@ -5,12 +5,12 @@
 
 Summary:	Professional 3D collision detection library
 Name:		bullet
-Version:	2.73
+Version:	2.74
 Release:	%mkrel 1
 License:	Zlib
 Group:		System/Libraries
 Url:		http://www.bulletphysics.com
-Source0:	http://bullet.googlecode.com/files/%{name}-%{version}-sp1.tgz
+Source0:	http://bullet.googlecode.com/files/%{name}-%{version}.tgz
 Patch1:		%{name}-2.68-shared-libraries.patch
 Patch3:		%{name}-2.73-use-system-libxml2.patch
 BuildRequires:	doxygen
