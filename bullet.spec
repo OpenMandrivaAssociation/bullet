@@ -6,7 +6,7 @@
 Summary:	Professional 3D collision detection library
 Name:		bullet
 Version:	2.74
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	Zlib
 Group:		System/Libraries
 Url:		http://www.bulletphysics.com
@@ -158,8 +158,8 @@ cp -f lib/*.so* %{buildroot}%{_libdir}
 
 #(tpg) add symlinks
 pushd %{buildroot}%{_libdir}
-for i in lib* ; do
-ln -s $i.so.%{major}* $i.so
+for i in lib*.so.%{major}* ; do
+ln -s $i `echo $i | cut -d'.' -f1`.so
 done
 popd
 
@@ -188,7 +188,7 @@ popd
 %{_libdir}/libbulletdynamics.a
 %{_libdir}/libbulletmath.a
 %{_libdir}/libbulletsoftbody.a
-	 
+
 %files -n %{develname}
 %defattr(-,root,root)
 %doc AUTHORS README LICENSE ChangeLog NEWS VERSION *.pdf
