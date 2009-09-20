@@ -5,8 +5,8 @@
 
 Summary:	Professional 3D collision detection library
 Name:		bullet
-Version:	2.74
-Release:	%mkrel 3
+Version:	2.75
+Release:	%mkrel 1
 License:	Zlib
 Group:		System/Libraries
 Url:		http://www.bulletphysics.com
