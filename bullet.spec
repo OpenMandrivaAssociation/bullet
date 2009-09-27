@@ -11,6 +11,7 @@ License:	Zlib
 Group:		System/Libraries
 Url:		http://www.bulletphysics.com
 Source0:	http://bullet.googlecode.com/files/%{name}-%{version}.tgz
+Patch0:		bullet-2.75-fix_undefined_symbol.patch
 Patch1:		%{name}-2.68-shared-libraries.patch
 Patch3:		%{name}-2.73-use-system-libxml2.patch
 BuildRequires:	doxygen
@@ -88,6 +89,7 @@ Static libraries for %{name}.
 
 %prep
 %setup -q
+%patch0 -p1
 %patch1 -p1
 %patch3 -p1
 
@@ -110,7 +112,6 @@ rm -rf Extras/LibXML
 
 %build
 %define Werror_cflags %nil
-%define _disable_ld_no_udefined 1
 
 #(tpg) export USE_ADDR64 only for x86_64, otherwise build fails, use system libxml2
 %ifnarch ix86
@@ -122,6 +123,9 @@ export CXXFLAGS=$CFLAGS
 export LDFLAGS="%{ldflags} -lxml2"
 
 ./autogen.sh
+
+# (tpg) dirty hack ;)
+sed -i -e 's/fiif/fi \n if/g' configure
 
 %configure2_5x \
 	--with-mesa
