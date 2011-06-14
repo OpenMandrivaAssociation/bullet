@@ -14,7 +14,7 @@ Source0:	http://bullet.googlecode.com/files/%{name}-%{version}-r2387.tgz
 Patch0:		bullet-2.77-extras-version.patch
 BuildRequires:	doxygen
 BuildRequires:	mesa-common-devel
-BuildRequires:	jam
+BuildRequires:	cmake
 BuildRequires:	libtool
 BuildRequires:	libxml2-devel
 BuildRequires:	graphviz
