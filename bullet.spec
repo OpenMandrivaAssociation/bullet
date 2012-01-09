@@ -13,7 +13,7 @@ Source0:	http://bullet.googlecode.com/files/%{name}-%{version}-rev2440.tgz
 Patch0:		bullet-2.77-extras-version.patch
 BuildRequires:	doxygen
 BuildRequires:	GL-devel
-BuildRequires:	mesaglut-devel
+BuildRequires:	freeglut-devel
 BuildRequires:	cmake
 BuildRequires:	libtool
 BuildRequires:	libxml2-devel
