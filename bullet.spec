@@ -1,19 +1,18 @@
 %define major 2
 %define libname %mklibname %{name} %{major}
 %define develname %mklibname %{name} -d
-%define staticname %mklibname %{name} -d -s
 
 Summary:	Professional 3D collision detection library
 Name:		bullet
-Version:	2.78
+Version:	2.79
 Release:	%mkrel 1
 License:	Zlib
 Group:		System/Libraries
-Url:		http://www.bulletphysics.com
-Source0:	http://bullet.googlecode.com/files/%{name}-%{version}-r2387.tgz
+URL:		http://www.bulletphysics.com
+Source0:	http://bullet.googlecode.com/files/%{name}-%{version}-rev2440.tgz
 Patch0:		bullet-2.77-extras-version.patch
 BuildRequires:	doxygen
-BuildRequires:	mesa-common-devel
+BuildRequires:	GL-devel
 BuildRequires:	cmake
 BuildRequires:	libtool
 BuildRequires:	libxml2-devel
@@ -75,16 +74,6 @@ Requires:	libxml2-devel
 %description -n %{develname}
 Development headers for bullet 3D collision library.
 
-%package -n %{staticname}
-Summary:	Static libraries for %{name}
-Group:		Development/C
-Requires:	%{develname} = %{version}-%{release}
-Provides:	lib%{name}-static-devel = %{version}-%{release}
-Provides:	%{name}-static-devel = %{version}-%{release}
-
-%description -n %{staticname}
-Static libraries for %{name}.
-
 %prep
 %setup -q
 %patch0 -p1
@@ -107,11 +96,14 @@ done
 
 # install libs from Extras
 pushd Extras
-cp -a ConvexDecomposition/*so* $RPM_BUILD_ROOT%{_libdir}
-cp -a glui/*so* $RPM_BUILD_ROOT%{_libdir}
+find . -name '*.so*' -exec cp -a {} %{buildroot}%{_libdir} \;
+popd
+# install libs from Demos
+pushd Demos
+find . -name '*.so*' -exec cp -a {} %{buildroot}%{_libdir} \;
 popd
 
-pushd $RPM_BUILD_ROOT%{_libdir}
+pushd %{buildroot}%{_libdir}
 for f in lib*.so.*.*
 do
   ln -sf $f ${f%\.*}
@@ -131,7 +123,7 @@ popd
 
 %files -n %{develname}
 %defattr(-,root,root)
-%doc AUTHORS README LICENSE ChangeLog NEWS VERSION *.pdf
+%doc AUTHORS README COPYING ChangeLog NEWS VERSION *.pdf
 %dir %{_includedir}/%{name}
 %{_libdir}/*.so
 %{_includedir}/%{name}/*
