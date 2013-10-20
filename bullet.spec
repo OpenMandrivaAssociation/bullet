@@ -1,79 +1,331 @@
-%define major 2
-%define libname %mklibname %{name} %{major}
-%define develname %mklibname %{name} -d
+%define major 2.80
 
 Summary:	Professional 3D collision detection library
 Name:		bullet
 Version:	2.80
-Release:	2
+Release:	4
 License:	Zlib
 Group:		System/Libraries
 URL:		http://www.bulletphysics.com
 Source0:	http://bullet.googlecode.com/files/%{name}-%{version}-rev2531.tgz
 Patch0:		bullet-2.80-extras-version.patch
+BuildRequires:	cmake
+BuildRequires:	libtool
 BuildRequires:	doxygen
+BuildRequires:	graphviz
+BuildRequires:	perl-Template-Toolkit
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(glut)
-BuildRequires:	cmake
-BuildRequires:	libtool
 BuildRequires:	pkgconfig(libxml-2.0)
-BuildRequires:	graphviz
-BuildRequires:	perl-Template-Toolkit
 
 %description
-Bullet is a professional open source multi-threaded 
-3D Collision Detection and Rigid Body Dynamics Library
-for games and animation.
-
-%package demo
-Summary:	A demo programs using bullet library
-Group:		Graphics
-Requires:	%{libname} = %{version}-%{release}
-
-%description demo
-A demo programs using bullet library.
-
-%package -n %{libname}
-Summary:	Professional 3D collision detection library
-Group:		System/Libraries
-
-%description -n %{libname}
-Bullet 3D Game Multiphysics Library provides state of the art 
+Bullet 3D Game Multiphysics Library provides state of the art
 collision detection, soft body and rigid body dynamics.
 
-* Used by many game companies in AAA titles on Playstation 3, 
+* Used by many game companies in AAA titles on Playstation 3,
   XBox 360, Nintendo Wii and PC
 * Modular extendible C++ design with hot-swap of most components
-* Optimized back-ends with multi-threaded support for Playstation 3 
+* Optimized back-ends with multi-threaded support for Playstation 3
   Cell SPU and other platforms
 * Discrete and continuous collision detection (CCD)
 * Swept collision queries
 * Ray casting with custom collision filtering
-* Generic convex support (using GJK), capsule, cylinder, cone, sphere, 
-  box and non-convex triangle meshes. 
-* Rigid body dynamics including constraint solvers, generic 
+* Generic convex support (using GJK), capsule, cylinder, cone, sphere,
+  box and non-convex triangle meshes.
+* Rigid body dynamics including constraint solvers, generic
   constraints, ragdolls, hinge, ball-socket
 * Support for constraint limits and motors
 * Soft body support including cloth, rope and deformable
 * Bullet is integrated into Blender 3D and provides a Maya Plugin
 * Supports import and export into COLLADA 1.4 Physics format
-* Support for dynamic deformation of non-convex triangle meshes, by 
-  refitting the acceleration structures 
+* Support for dynamic deformation of non-convex triangle meshes, by
+  refitting the acceleration structures
 
-The Library is free for commercial use and open source 
+The Library is free for commercial use and open source
 under the ZLib License.
 
-%package -n %{develname}
-Summary:	Development headers for bullet
+#----------------------------------------------------------------------------
+
+%package demo
+Summary:	A demo programs using bullet library
+Group:		Graphics
+
+%description demo
+A demo programs using bullet library.
+
+%files demo
+%{_bindir}/%{name}-*
+
+#----------------------------------------------------------------------------
+
+%define libBulletCollision %mklibname BulletCollision %{major}
+
+%package -n %{libBulletCollision}
+Summary:	Professional 3D game multiphysics library
+Group:		System/Libraries
+Conflicts:	%{_lib}bullet2 < 2.80-4
+Obsoletes:	%{_lib}bullet2 < 2.80-4
+
+%description -n %{libBulletCollision}
+Bullet is a professional open source multi-threaded 3D Collision Detection
+and Rigid Body Dynamics Library for games and animation.
+
+This package provides one of Bullet shared libraries.
+
+%files -n %{libBulletCollision}
+%{_libdir}/libBulletCollision.so.%{major}
+
+#----------------------------------------------------------------------------
+
+%define libBulletDynamics %mklibname BulletDynamics %{major}
+
+%package -n %{libBulletDynamics}
+Summary:	Professional 3D game multiphysics library
+Group:		System/Libraries
+Conflicts:	%{_lib}bullet2 < 2.80-4
+
+%description -n %{libBulletDynamics}
+Bullet is a professional open source multi-threaded 3D Collision Detection
+and Rigid Body Dynamics Library for games and animation.
+
+This package provides one of Bullet shared libraries.
+
+%files -n %{libBulletDynamics}
+%{_libdir}/libBulletDynamics.so.%{major}
+
+#----------------------------------------------------------------------------
+
+%define libBulletFileLoader %mklibname BulletFileLoader %{major}
+
+%package -n %{libBulletFileLoader}
+Summary:	Professional 3D game multiphysics library
+Group:		System/Libraries
+Conflicts:	%{_lib}bullet2 < 2.80-4
+
+%description -n %{libBulletFileLoader}
+Bullet is a professional open source multi-threaded 3D Collision Detection
+and Rigid Body Dynamics Library for games and animation.
+
+This package provides one of Bullet shared libraries.
+
+%files -n %{libBulletFileLoader}
+%{_libdir}/libBulletFileLoader.so.%{major}
+
+#----------------------------------------------------------------------------
+
+%define libBulletMultiThreaded %mklibname BulletMultiThreaded %{major}
+
+%package -n %{libBulletMultiThreaded}
+Summary:	Professional 3D game multiphysics library
+Group:		System/Libraries
+Conflicts:	%{_lib}bullet2 < 2.80-4
+
+%description -n %{libBulletMultiThreaded}
+Bullet is a professional open source multi-threaded 3D Collision Detection
+and Rigid Body Dynamics Library for games and animation.
+
+This package provides one of Bullet shared libraries.
+
+%files -n %{libBulletMultiThreaded}
+%{_libdir}/libBulletMultiThreaded.so.%{major}
+
+#----------------------------------------------------------------------------
+
+%define libBulletSoftBody %mklibname BulletSoftBody %{major}
+
+%package -n %{libBulletSoftBody}
+Summary:	Professional 3D game multiphysics library
+Group:		System/Libraries
+Conflicts:	%{_lib}bullet2 < 2.80-4
+
+%description -n %{libBulletSoftBody}
+Bullet is a professional open source multi-threaded 3D Collision Detection
+and Rigid Body Dynamics Library for games and animation.
+
+This package provides one of Bullet shared libraries.
+
+%files -n %{libBulletSoftBody}
+%{_libdir}/libBulletSoftBody.so.%{major}
+
+#----------------------------------------------------------------------------
+
+%define libBulletWorldImporter %mklibname BulletWorldImporter %{major}
+
+%package -n %{libBulletWorldImporter}
+Summary:	Professional 3D game multiphysics library
+Group:		System/Libraries
+Conflicts:	%{_lib}bullet2 < 2.80-4
+
+%description -n %{libBulletWorldImporter}
+Bullet is a professional open source multi-threaded 3D Collision Detection
+and Rigid Body Dynamics Library for games and animation.
+
+This package provides one of Bullet shared libraries.
+
+%files -n %{libBulletWorldImporter}
+%{_libdir}/libBulletWorldImporter.so.%{major}
+
+#----------------------------------------------------------------------------
+
+%define libConvexDecomposition %mklibname ConvexDecomposition %{major}
+
+%package -n %{libConvexDecomposition}
+Summary:	Professional 3D game multiphysics library
+Group:		System/Libraries
+Conflicts:	%{_lib}bullet2 < 2.80-4
+
+%description -n %{libConvexDecomposition}
+Bullet is a professional open source multi-threaded 3D Collision Detection
+and Rigid Body Dynamics Library for games and animation.
+
+This package provides one of Bullet shared libraries.
+
+%files -n %{libConvexDecomposition}
+%{_libdir}/libConvexDecomposition.so.%{major}
+
+#----------------------------------------------------------------------------
+
+%define libGIMPACTUtils %mklibname GIMPACTUtils %{major}
+
+%package -n %{libGIMPACTUtils}
+Summary:	Professional 3D game multiphysics library
+Group:		System/Libraries
+Conflicts:	%{_lib}bullet2 < 2.80-4
+
+%description -n %{libGIMPACTUtils}
+Bullet is a professional open source multi-threaded 3D Collision Detection
+and Rigid Body Dynamics Library for games and animation.
+
+This package provides one of Bullet shared libraries.
+
+%files -n %{libGIMPACTUtils}
+%{_libdir}/libGIMPACTUtils.so.%{major}
+
+#----------------------------------------------------------------------------
+
+%define libGLUI %mklibname GLUI %{major}
+
+%package -n %{libGLUI}
+Summary:	Professional 3D game multiphysics library
+Group:		System/Libraries
+Conflicts:	%{_lib}bullet2 < 2.80-4
+
+%description -n %{libGLUI}
+Bullet is a professional open source multi-threaded 3D Collision Detection
+and Rigid Body Dynamics Library for games and animation.
+
+This package provides one of Bullet shared libraries.
+
+%files -n %{libGLUI}
+%{_libdir}/libGLUI.so.%{major}
+
+#----------------------------------------------------------------------------
+
+%define libHACD %mklibname HACD %{major}
+
+%package -n %{libHACD}
+Summary:	Professional 3D game multiphysics library
+Group:		System/Libraries
+Conflicts:	%{_lib}bullet2 < 2.80-4
+
+%description -n %{libHACD}
+Bullet is a professional open source multi-threaded 3D Collision Detection
+and Rigid Body Dynamics Library for games and animation.
+
+This package provides one of Bullet shared libraries.
+
+%files -n %{libHACD}
+%{_libdir}/libHACD.so.%{major}
+
+#----------------------------------------------------------------------------
+
+%define libLinearMath %mklibname LinearMath %{major}
+
+%package -n %{libLinearMath}
+Summary:	Professional 3D game multiphysics library
+Group:		System/Libraries
+Conflicts:	%{_lib}bullet2 < 2.80-4
+
+%description -n %{libLinearMath}
+Bullet is a professional open source multi-threaded 3D Collision Detection
+and Rigid Body Dynamics Library for games and animation.
+
+This package provides one of Bullet shared libraries.
+
+%files -n %{libLinearMath}
+%{_libdir}/libLinearMath.so.%{major}
+
+#----------------------------------------------------------------------------
+
+%define libMiniCL %mklibname MiniCL %{major}
+
+%package -n %{libMiniCL}
+Summary:	Professional 3D game multiphysics library
+Group:		System/Libraries
+Conflicts:	%{_lib}bullet2 < 2.80-4
+
+%description -n %{libMiniCL}
+Bullet is a professional open source multi-threaded 3D Collision Detection
+and Rigid Body Dynamics Library for games and animation.
+
+This package provides one of Bullet shared libraries.
+
+%files -n %{libMiniCL}
+%{_libdir}/libMiniCL.so.%{major}
+
+#----------------------------------------------------------------------------
+
+%define libOpenGLSupport %mklibname OpenGLSupport %{major}
+
+%package -n %{libOpenGLSupport}
+Summary:	Professional 3D game multiphysics library
+Group:		System/Libraries
+Conflicts:	%{_lib}bullet2 < 2.80-4
+
+%description -n %{libOpenGLSupport}
+Bullet is a professional open source multi-threaded 3D Collision Detection
+and Rigid Body Dynamics Library for games and animation.
+
+This package provides one of Bullet shared libraries.
+
+%files -n %{libOpenGLSupport}
+%{_libdir}/libOpenGLSupport.so.%{major}
+
+#----------------------------------------------------------------------------
+
+%define devname %mklibname %{name} -d
+
+%package -n %{devname}
+Summary:	Development headers for Bullet
 Group:		Development/C
-Provides:	%{name}-devel = %{version}-%{release}
-Provides:	lib%{name}-devel = %{version}-%{release}
-Requires:	%{libname} = %{version}-%{release}
+Provides:	%{name}-devel = %{EVRD}
+Requires:	%{libBulletCollision} = %{EVRD}
+Requires:	%{libBulletDynamics} = %{EVRD}
+Requires:	%{libBulletFileLoader} = %{EVRD}
+Requires:	%{libBulletMultiThreaded} = %{EVRD}
+Requires:	%{libBulletSoftBody} = %{EVRD}
+Requires:	%{libBulletWorldImporter} = %{EVRD}
+Requires:	%{libConvexDecomposition} = %{EVRD}
+Requires:	%{libGIMPACTUtils} = %{EVRD}
+Requires:	%{libGLUI} = %{EVRD}
+Requires:	%{libHACD} = %{EVRD}
+Requires:	%{libLinearMath} = %{EVRD}
+Requires:	%{libMiniCL} = %{EVRD}
+Requires:	%{libOpenGLSupport} = %{EVRD}
 Requires:	pkgconfig(libxml-2.0)
 
-%description -n %{develname}
-Development headers for bullet 3D collision library.
+%description -n %{devname}
+Development headers for Bullet, a 3D collision library.
+
+%files -n %{devname}
+%doc AUTHORS README COPYING ChangeLog NEWS VERSION *.pdf
+%dir %{_includedir}/%{name}
+%{_libdir}/*.so
+%{_includedir}/%{name}/*
+%{_libdir}/pkgconfig/%{name}.pc
+
+#----------------------------------------------------------------------------
 
 %prep
 %setup -qn %{name}-%{version}-rev2531
@@ -99,29 +351,9 @@ done
 pushd Extras
 find . -name '*.so*' -exec cp -a {} %{buildroot}%{_libdir} \;
 popd
+
 # install libs from Demos
 pushd Demos
 find . -name '*.so*' -exec cp -a {} %{buildroot}%{_libdir} \;
 popd
-
-pushd %{buildroot}%{_libdir}
-for f in lib*.so.*.*
-do
-  ln -sf $f ${f%\.*}
-done
-popd
-
-%files demo
-%{_bindir}/%{name}-*
-
-%files -n %{libname}
-%{_libdir}/*.so.%{major}*
-
-%files -n %{develname}
-%doc AUTHORS README COPYING ChangeLog NEWS VERSION *.pdf
-%dir %{_includedir}/%{name}
-%{_libdir}/*.so
-%{_includedir}/%{name}/*
-%{_libdir}/pkgconfig/%{name}.pc
-
 

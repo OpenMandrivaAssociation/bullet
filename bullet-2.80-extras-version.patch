@@ -1,7 +1,20 @@
-diff -up bullet-2.77/Extras/glui/CMakeLists.txt.extras-version bullet-2.77/Extras/glui/CMakeLists.txt
---- bullet-2.77/Extras/glui/CMakeLists.txt.extras-version	2010-03-06 16:23:36.000000000 +0100
-+++ bullet-2.77/Extras/glui/CMakeLists.txt	2010-07-26 12:09:01.000000000 +0200
-@@ -61,6 +61,8 @@ arcball.cpp			glui_button.cpp			glui_fil
+diff -urN bullet-2.80/Demos/OpenGL/CMakeLists.txt bullet-2.80-patched/Demos/OpenGL/CMakeLists.txt
+--- bullet-2.80/Demos/OpenGL/CMakeLists.txt	2011-09-13 12:52:42.000000000 +1100
++++ bullet-2.80-patched/Demos/OpenGL/CMakeLists.txt	2013-10-20 19:39:57.617640157 +1100
+@@ -49,7 +49,8 @@
+ 		Win32DemoApplication.h
+ )
+ 
+-
++SET_TARGET_PROPERTIES(OpenGLSupport PROPERTIES VERSION ${BULLET_VERSION})
++SET_TARGET_PROPERTIES(OpenGLSupport PROPERTIES SOVERSION ${BULLET_VERSION})
+ IF (BUILD_SHARED_LIBS)
+   TARGET_LINK_LIBRARIES(OpenGLSupport BulletDynamics BulletCollision ${GLUT_glut_LIBRARY} ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY})
+ ENDIF (BUILD_SHARED_LIBS)
+diff -urN bullet-2.80/Extras/glui/CMakeLists.txt bullet-2.80-patched/Extras/glui/CMakeLists.txt
+--- bullet-2.80/Extras/glui/CMakeLists.txt	2010-03-07 01:23:36.000000000 +1000
++++ bullet-2.80-patched/Extras/glui/CMakeLists.txt	2013-10-20 19:38:50.022581084 +1100
+@@ -61,6 +61,8 @@
  	
  )
  
