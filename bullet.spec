@@ -3,7 +3,7 @@
 Summary:	Professional 3D collision detection library
 Name:		bullet
 Version:	2.82
-Release:	3
+Release:	4
 License:	Zlib
 Group:		System/Libraries
 URL:		http://www.bulletphysics.com
@@ -284,6 +284,7 @@ Requires:	%{libBulletDynamics} = %{EVRD}
 Requires:	%{libBulletFileLoader} = %{EVRD}
 Requires:	%{libBulletSoftBody} = %{EVRD}
 Requires:	%{libBulletWorldImporter} = %{EVRD}
+Requires:	%{libBulletXmlWorldImporter} = %{EVRD}
 Requires:	%{libConvexDecomposition} = %{EVRD}
 Requires:	%{libGIMPACTUtils} = %{EVRD}
 Requires:	%{libGLUI} = %{EVRD}
