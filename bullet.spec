@@ -3,12 +3,13 @@
 Summary:	Professional 3D collision detection library
 Name:		bullet
 Version:	2.82
-Release:	2
+Release:	3
 License:	Zlib
 Group:		System/Libraries
 URL:		http://www.bulletphysics.com
 Source0:	http://bullet.googlecode.com/files/%{name}-%{version}-r2704.tgz
 Patch0:		bullet-2.80-extras-version.patch
+Patch1:		bullet-2.80-library.patch
 BuildRequires:	cmake
 BuildRequires:	libtool
 BuildRequires:	doxygen
@@ -300,6 +301,7 @@ Development headers for Bullet, a 3D collision library.
 %{_libdir}/*.so
 %{_libdir}/cmake/%{name}
 %{_includedir}/%{name}/*
+%{_includedir}/OpenGL
 %{_libdir}/pkgconfig/%{name}.pc
 
 #----------------------------------------------------------------------------
@@ -322,6 +324,7 @@ mv ChangeLog.utf8 ChangeLog
 	-DBUILD_EXTRAS=ON \
 	-DBUILD_DEMOS=ON \
 	-DCMAKE_SKIP_BUILD_RPATH=ON \
+	-DINSTALL_EXTRA_LIBS=ON \
 	-DINCLUDE_INSTALL_DIR=%{_includedir}/bullet
 %make
 
