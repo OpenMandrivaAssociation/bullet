@@ -1,15 +1,16 @@
-%define major 2.82
+%define major 2.83
+%define	_disable_lto %{nil}
+%define _disable_ld_no_undefined 1
 
 Summary:	Professional 3D collision detection library
 Name:		bullet
-Version:	2.82
-Release:	4
+Version:	2.83.7
+Release:	1
 License:	Zlib
 Group:		System/Libraries
 URL:		http://www.bulletphysics.com
-Source0:	http://bullet.googlecode.com/files/%{name}-%{version}-r2704.tgz
-Patch0:		bullet-2.80-extras-version.patch
-Patch1:		bullet-2.80-library.patch
+Source0:	https://github.com/bulletphysics/bullet3/archive/%{version}.tar.gz
+Patch0:		do-not-build-with-embedded-tinyxml-library.patch
 BuildRequires:	cmake
 BuildRequires:	libtool
 BuildRequires:	doxygen
@@ -19,6 +20,7 @@ BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(glut)
 BuildRequires:	pkgconfig(libxml-2.0)
+BuildRequires:	tinyxml-devel
 
 %description
 Bullet 3D Game Multiphysics Library provides state of the art
@@ -45,18 +47,6 @@ collision detection, soft body and rigid body dynamics.
 
 The Library is free for commercial use and open source
 under the ZLib License.
-
-#----------------------------------------------------------------------------
-
-%package demo
-Summary:	A demo programs using bullet library
-Group:		Graphics
-
-%description demo
-A demo programs using bullet library.
-
-%files demo
-%{_bindir}/%{name}-*
 
 #----------------------------------------------------------------------------
 
@@ -187,24 +177,6 @@ This package provides one of Bullet shared libraries.
 
 #----------------------------------------------------------------------------
 
-%define libGLUI %mklibname GLUI %{major}
-
-%package -n %{libGLUI}
-Summary:	Professional 3D game multiphysics library
-Group:		System/Libraries
-Conflicts:	%{_lib}bullet2 < 2.80-4
-
-%description -n %{libGLUI}
-Bullet is a professional open source multi-threaded 3D Collision Detection
-and Rigid Body Dynamics Library for games and animation.
-
-This package provides one of Bullet shared libraries.
-
-%files -n %{libGLUI}
-%{_libdir}/libGLUI.so.%{major}
-
-#----------------------------------------------------------------------------
-
 %define libHACD %mklibname HACD %{major}
 
 %package -n %{libHACD}
@@ -240,23 +212,6 @@ This package provides one of Bullet shared libraries.
 %{_libdir}/libLinearMath.so.%{major}
 
 #----------------------------------------------------------------------------
-%define libOpenGLSupport %mklibname OpenGLSupport %{major}
-
-%package -n %{libOpenGLSupport}
-Summary:	Professional 3D game multiphysics library
-Group:		System/Libraries
-Conflicts:	%{_lib}bullet2 < 2.80-4
-
-%description -n %{libOpenGLSupport}
-Bullet is a professional open source multi-threaded 3D Collision Detection
-and Rigid Body Dynamics Library for games and animation.
-
-This package provides one of Bullet shared libraries.
-
-%files -n %{libOpenGLSupport}
-%{_libdir}/libOpenGLSupport.so.%{major}
-
-#----------------------------------------------------------------------------
 %define libBulletXmlWorldImporter %mklibname BulletXmlWorldImporter %{major}
 
 %package -n %{libBulletXmlWorldImporter}
@@ -287,64 +242,52 @@ Requires:	%{libBulletWorldImporter} = %{EVRD}
 Requires:	%{libBulletXmlWorldImporter} = %{EVRD}
 Requires:	%{libConvexDecomposition} = %{EVRD}
 Requires:	%{libGIMPACTUtils} = %{EVRD}
-Requires:	%{libGLUI} = %{EVRD}
 Requires:	%{libHACD} = %{EVRD}
 Requires:	%{libLinearMath} = %{EVRD}
-Requires:	%{libOpenGLSupport} = %{EVRD}
 Requires:	pkgconfig(libxml-2.0)
 
 %description -n %{devname}
 Development headers for Bullet, a 3D collision library.
 
 %files -n %{devname}
-%doc AUTHORS README COPYING ChangeLog NEWS VERSION *.pdf
-%dir %{_includedir}/%{name}
 %{_libdir}/*.so
 %{_libdir}/cmake/%{name}
 %{_includedir}/%{name}/*
-%{_includedir}/OpenGL
 %{_libdir}/pkgconfig/%{name}.pc
 
 #----------------------------------------------------------------------------
 
 %prep
-%setup -qn %{name}-%{version}-r2704
+%setup -qn %{name}3-%{version}
 %apply_patches
+rm -rf examples/
 
-rm -f src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/CMakeLists.txt Demos/OpenCLClothDemo/CMakeLists.txt
 # Set these files to right permission
-chmod 644 src/LinearMath/btPoolAllocator.h
-chmod 644 src/BulletDynamics/ConstraintSolver/btSliderConstraint.cpp
-chmod 644 src/BulletDynamics/ConstraintSolver/btSliderConstraint.h
-
-iconv -f ISO-8859-1 -t UTF-8 -o ChangeLog.utf8 ChangeLog
-mv ChangeLog.utf8 ChangeLog
+#chmod 644 src/LinearMath/btPoolAllocator.h
+#chmod 644 src/BulletDynamics/ConstraintSolver/btSliderConstraint.cpp
+#chmod 644 src/BulletDynamics/ConstraintSolver/btSliderConstraint.h
+sed -i 's|-I@CMAKE_INSTALL_PREFIX@/@INCLUDE_INSTALL_DIR@|-I@INCLUDE_INSTALL_DIR@|' bullet.pc.cmake
 
 %build
 %cmake \
 	-DBUILD_EXTRAS=ON \
-	-DBUILD_DEMOS=ON \
+	-DBUILD_SHARED_LIBS=ON \
+	-DBUILD_BULLET3=OFF \
+	-DBUILD_UNIT_TESTS=OFF \
+	-DBUILD_CPU_DEMOS=OFF \
+	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+	-DBUILD_OPENGL3_DEMOS=OFF \
+	-DBUILD_BULLET2_DEMOS=OFF \
 	-DCMAKE_SKIP_BUILD_RPATH=ON \
 	-DINSTALL_EXTRA_LIBS=ON \
 	-DINCLUDE_INSTALL_DIR=%{_includedir}/bullet
+
 %make
 
 %install
-cd build
-%makeinstall_std
-
-#install demos
-mkdir -p %{buildroot}%{_bindir}
-for i in `find -type f -name *Demo`; do
-    install -m 755 $i %{buildroot}%{_bindir}/bullet-`basename $i`
-done
+%makeinstall_std -C build
 
 # install libs from Extras
 pushd Extras
-find . -name '*.so*' -exec cp -a {} %{buildroot}%{_libdir} \;
-popd
-
-# install libs from Demos
-pushd Demos
 find . -name '*.so*' -exec cp -a {} %{buildroot}%{_libdir} \;
 popd
