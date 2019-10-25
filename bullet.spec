@@ -10,7 +10,7 @@ License:	Zlib
 Group:		System/Libraries
 URL:		http://www.bulletphysics.com
 Source0:	https://github.com/bulletphysics/bullet3/archive/%{version}/%{name}3-%{version}.tar.gz
-Patch0:		do-not-build-with-embedded-tinyxml-library.patch
+#Patch0:		do-not-build-with-embedded-tinyxml-library.patch
 BuildRequires:	cmake
 BuildRequires:	libtool
 BuildRequires:	doxygen
