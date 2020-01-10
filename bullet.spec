@@ -259,7 +259,7 @@ Development headers for Bullet, a 3D collision library.
 
 %prep
 %setup -qn %{name}3-%{version}
-%apply_patches
+%autopatch -p1
 rm -rf examples/
 
 # Set these files to right permission
