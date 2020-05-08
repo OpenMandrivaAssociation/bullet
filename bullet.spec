@@ -11,6 +11,11 @@ Group:		System/Libraries
 URL:		http://www.bulletphysics.com
 Source0:	https://github.com/bulletphysics/bullet3/archive/%{version}/%{name}3-%{version}.tar.gz
 #Patch0:		do-not-build-with-embedded-tinyxml-library.patch
+# https://github.com/bulletphysics/bullet3/issues/626
+Patch0:         bullet-2.89-fix-bullet.pc.patch
+# https://github.com/bulletphysics/bullet3/issues/1489
+Patch1:         bullet-2.87-disable-underlinked-bulletrobotics.patch
+
 BuildRequires:	cmake
 BuildRequires:	libtool
 BuildRequires:	doxygen
