@@ -276,22 +276,17 @@ sed -i 's|-I@CMAKE_INSTALL_PREFIX@/@INCLUDE_INSTALL_DIR@|-I@INCLUDE_INSTALL_DIR@
 
 %build
 %cmake \
-	-DBUILD_EXTRAS=ON \
-	-DBUILD_SHARED_LIBS=ON \
-	-DBUILD_BULLET3=OFF \
-	-DBUILD_UNIT_TESTS=OFF \
-	-DBUILD_CPU_DEMOS=OFF \
-	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
-	-DBUILD_OPENGL3_DEMOS=OFF \
-	-DBUILD_BULLET2_DEMOS=OFF \
-	-DCMAKE_SKIP_BUILD_RPATH=ON \
-	-DINSTALL_EXTRA_LIBS=ON \
-	-DINCLUDE_INSTALL_DIR=%{_includedir}/bullet
-
-%make
+    -DBUILD_BULLET2_DEMOS=OFF \
+    -DBUILD_CPU_DEMOS=OFF \
+    -DBUILD_EXTRAS=ON \
+    -DBUILD_OPENGL3_DEMOS=OFF \
+    -DBUILD_UNIT_TESTS=OFF \
+    -DINSTALL_EXTRA_LIBS=ON \
+    -DINCLUDE_INSTALL_DIR=%{_includedir}/%{name}
+%make_build
 
 %install
-%makeinstall_std -C build
+%make_install -C build
 
 # install libs from Extras
 pushd Extras
