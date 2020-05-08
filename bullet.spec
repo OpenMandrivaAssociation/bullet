@@ -4,7 +4,7 @@
 
 Summary:	Professional 3D collision detection library
 Name:		bullet
-Version:	2.88
+Version:	2.89
 Release:	1
 License:	Zlib
 Group:		System/Libraries
@@ -19,6 +19,7 @@ BuildRequires:	perl-Template-Toolkit
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(glut)
+BuildRequires:  pkgconfig(freeglut)
 BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	tinyxml-devel
 
