@@ -1,0 +1,10 @@
+Index: bullet3-2.87/Extras/CMakeLists.txt
+===================================================================
+--- bullet3-2.87/Extras/CMakeLists.txt
++++ bullet3-2.87/Extras/CMakeLists.txt	2017-12-30 12:09:53.120682523 +0100
+@@ -1,4 +1,4 @@
+-SUBDIRS( InverseDynamics BulletRobotics obj2sdf Serialize ConvexDecomposition HACD GIMPACTUtils )
++SUBDIRS( InverseDynamics obj2sdf Serialize ConvexDecomposition HACD GIMPACTUtils )
+ 
+ 
+ 
