@@ -1,0 +1,13 @@
+Index: bullet3-2.89/bullet.pc.cmake
+===================================================================
+--- bullet3-2.89/bullet.pc.cmake
++++ bullet3-2.89/bullet.pc.cmake	2020-01-10 14:20:21.973747936 +0100
+@@ -1,7 +1,7 @@
+ prefix=@CMAKE_INSTALL_PREFIX@
+ exec_prefix=${prefix}
+ libdir=${exec_prefix}/@LIB_DESTINATION@
+-includedir=${prefix}/@INCLUDE_INSTALL_DIR@
++includedir=@INCLUDE_INSTALL_DIR@
+ 
+ Name: bullet
+ Description: Bullet Continuous Collision Detection and Physics Library
