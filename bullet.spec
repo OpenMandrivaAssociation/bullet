@@ -1,6 +1,6 @@
 %define major 2.89
-%define	_disable_lto %{nil}
-%define _disable_ld_no_undefined 1
+#define	_disable_lto %{nil}
+#define _disable_ld_no_undefined 1
 
 Summary:	Professional 3D collision detection library
 Name:		bullet
