@@ -26,7 +26,7 @@ BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(glut)
 BuildRequires:  pkgconfig(freeglut)
 BuildRequires:	pkgconfig(libxml-2.0)
-BuildRequires:	tinyxml-devel
+#BuildRequires:	tinyxml-devel
 
 %description
 Bullet 3D Game Multiphysics Library provides state of the art
@@ -266,6 +266,11 @@ Development headers for Bullet, a 3D collision library.
 %prep
 %setup -qn %{name}3-%{version}
 %autopatch -p1
+rm -rf build3/*.{bat,exe}
+rm -rf build3/xcode*
+rm -rf build3/*osx*
+rm -rf build3/premake*
+rm -rf data
 rm -rf examples/
 
 # Set these files to right permission
@@ -273,6 +278,9 @@ rm -rf examples/
 #chmod 644 src/BulletDynamics/ConstraintSolver/btSliderConstraint.cpp
 #chmod 644 src/BulletDynamics/ConstraintSolver/btSliderConstraint.h
 sed -i 's|-I@CMAKE_INSTALL_PREFIX@/@INCLUDE_INSTALL_DIR@|-I@INCLUDE_INSTALL_DIR@|' bullet.pc.cmake
+
+sed -i 's|BulletRobotics||' Extras/CMakeLists.txt
+sed -i 's|obj2sdf||' Extras/CMakeLists.txt
 
 %build
 %cmake \
