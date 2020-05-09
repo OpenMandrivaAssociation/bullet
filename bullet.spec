@@ -15,6 +15,7 @@ Source0:	https://github.com/bulletphysics/bullet3/archive/%{version}/%{name}3-%{
 Patch0:         bullet-2.89-fix-bullet.pc.patch
 # https://github.com/bulletphysics/bullet3/issues/1489
 Patch1:         bullet-2.87-disable-underlinked-bulletrobotics.patch
+Patch2:         use-system-libs.patch
 
 BuildRequires:	cmake
 BuildRequires:	libtool
