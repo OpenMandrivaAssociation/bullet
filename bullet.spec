@@ -1,4 +1,4 @@
-%define major 2.85
+%define major 2.89
 %define	_disable_lto %{nil}
 %define _disable_ld_no_undefined 1
 
