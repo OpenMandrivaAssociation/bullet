@@ -27,7 +27,7 @@ BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(glut)
 BuildRequires:  pkgconfig(freeglut)
 BuildRequires:	pkgconfig(libxml-2.0)
-#BuildRequires:	tinyxml-devel
+BuildRequires:	pkgconfig(tinyxml2)
 
 %description
 Bullet 3D Game Multiphysics Library provides state of the art
