@@ -55,6 +55,25 @@ collision detection, soft body and rigid body dynamics.
 The Library is free for commercial use and open source
 under the ZLib License.
 
+
+#----------------------------------------------------------------------------
+%define libBulletCommon %mklibname BulletCommon %{major}
+
+%package -n %{libBulletCommon}
+Summary:	Professional 3D game multiphysics library
+Group:		System/Libraries
+Conflicts:	%{_lib}bullet2 < 2.80-4
+Obsoletes:	%{_lib}bullet2 < 2.80-4
+
+%description -n %{libBulletCommon}
+Bullet is a professional open source multi-threaded 3D Collision Detection
+and Rigid Body Dynamics Library for games and animation.
+
+This package provides one of Bullet shared libraries.
+
+%files -n %{libBulletCommon}
+%{_libdir}/libBullet3Common.so.%{major}
+
 #----------------------------------------------------------------------------
 
 %define libBulletCollision %mklibname BulletCollision %{major}
@@ -73,6 +92,7 @@ This package provides one of Bullet shared libraries.
 
 %files -n %{libBulletCollision}
 %{_libdir}/libBulletCollision.so.%{major}
+%{_libdir}/libBullet3Collision.so.%{major}
 
 #----------------------------------------------------------------------------
 
@@ -91,6 +111,7 @@ This package provides one of Bullet shared libraries.
 
 %files -n %{libBulletDynamics}
 %{_libdir}/libBulletDynamics.so.%{major}
+%{_libdir}/libBullet3Dynamics.so.%{major}
 
 #----------------------------------------------------------------------------
 
@@ -109,6 +130,7 @@ This package provides one of Bullet shared libraries.
 
 %files -n %{libBulletFileLoader}
 %{_libdir}/libBulletFileLoader.so.%{major}
+%{_libdir}/libBullet2FileLoader.so.%{major}
 
 #----------------------------------------------------------------------------
 
@@ -166,6 +188,24 @@ This package provides one of Bullet shared libraries.
 
 #----------------------------------------------------------------------------
 
+%define libGeometry %mklibname Geometry %{major}
+
+%package -n %{libGeometry}
+Summary:	Professional 3D game multiphysics library
+Group:		System/Libraries
+Conflicts:	%{_lib}bullet2 < 2.80-4
+
+%description -n %{libGeometry}
+Bullet is a professional open source multi-threaded 3D Collision Detection
+and Rigid Body Dynamics Library for games and animation.
+
+This package provides one of Bullet shared libraries.
+
+%files -n %{libGeometry}
+%{_libdir}/libBullet3Geometry.so.%{major}
+
+#----------------------------------------------------------------------------
+
 %define libGIMPACTUtils %mklibname GIMPACTUtils %{major}
 
 %package -n %{libGIMPACTUtils}
@@ -181,6 +221,61 @@ This package provides one of Bullet shared libraries.
 
 %files -n %{libGIMPACTUtils}
 %{_libdir}/libGIMPACTUtils.so.%{major}
+
+#----------------------------------------------------------------------------
+
+%define libOpenCL %mklibname OpenCL %{major}
+
+%package -n %{libOpenCL}
+Summary:	Professional 3D game multiphysics library
+Group:		System/Libraries
+Conflicts:	%{_lib}bullet2 < 2.80-4
+
+%description -n %{libOpenCL}
+Bullet is a professional open source multi-threaded 3D Collision Detection
+and Rigid Body Dynamics Library for games and animation.
+
+This package provides one of Bullet shared libraries.
+
+%files -n %{libOpenCL}
+%{_libdir}/libBullet3OpenCL.so.%{major}
+
+
+#----------------------------------------------------------------------------
+
+%define libInverseDynamics %mklibname InverseDynamics %{major}
+
+%package -n %{libInverseDynamics}
+Summary:	Professional 3D game multiphysics library
+Group:		System/Libraries
+Conflicts:	%{_lib}bullet2 < 2.80-4
+
+%description -n %{libInverseDynamics}
+Bullet is a professional open source multi-threaded 3D Collision Detection
+and Rigid Body Dynamics Library for games and animation.
+
+This package provides one of Bullet shared libraries.
+
+%files -n %{libInverseDynamics}
+%{_libdir}/libBullet3InverseDynamics.so.%{major}
+
+#----------------------------------------------------------------------------
+
+%define libInverseDynamicsUtils %mklibname InverseDynamicsUtils %{major}
+
+%package -n %{libInverseDynamicsUtils}
+Summary:	Professional 3D game multiphysics library
+Group:		System/Libraries
+Conflicts:	%{_lib}bullet2 < 2.80-4
+
+%description -n %{libInverseDynamicsUtils}
+Bullet is a professional open source multi-threaded 3D Collision Detection
+and Rigid Body Dynamics Library for games and animation.
+
+This package provides one of Bullet shared libraries.
+
+%files -n %{libInverseDynamicsUtils}
+%{_libdir}/libBullet3InverseDynamicsUtils.so.%{major}
 
 #----------------------------------------------------------------------------
 
@@ -242,6 +337,11 @@ Summary:	Development headers for Bullet
 Group:		Development/C
 Provides:	%{name}-devel = %{EVRD}
 Requires:	%{libBulletCollision} = %{EVRD}
+Requires:	%{libBulletCommon} = %{EVRD}
+Requires:	%{libBulletGeometry} = %{EVRD}
+Requires:	%{libBulletOpenCL} = %{EVRD}
+Requires:	%{libBulletInverseDynamics} = %{EVRD}
+Requires:	%{libBulletInverseDynamicsUtils} = %{EVRD}
 Requires:	%{libBulletDynamics} = %{EVRD}
 Requires:	%{libBulletFileLoader} = %{EVRD}
 Requires:	%{libBulletSoftBody} = %{EVRD}
