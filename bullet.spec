@@ -257,7 +257,7 @@ and Rigid Body Dynamics Library for games and animation.
 This package provides one of Bullet shared libraries.
 
 %files -n %{libInverseDynamics}
-%{_libdir}/libBullet3InverseDynamics.so.%{major}
+%{_libdir}/libBulletInverseDynamics.so.%{major}
 
 #----------------------------------------------------------------------------
 
@@ -275,7 +275,7 @@ and Rigid Body Dynamics Library for games and animation.
 This package provides one of Bullet shared libraries.
 
 %files -n %{libInverseDynamicsUtils}
-%{_libdir}/libBullet3InverseDynamicsUtils.so.%{major}
+%{_libdir}/libBulletInverseDynamicsUtils.so.%{major}
 
 #----------------------------------------------------------------------------
 
