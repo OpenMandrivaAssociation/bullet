@@ -338,10 +338,10 @@ Group:		Development/C
 Provides:	%{name}-devel = %{EVRD}
 Requires:	%{libBulletCollision} = %{EVRD}
 Requires:	%{libBulletCommon} = %{EVRD}
-Requires:	%{libBulletGeometry} = %{EVRD}
-Requires:	%{libBulletOpenCL} = %{EVRD}
-Requires:	%{libBulletInverseDynamics} = %{EVRD}
-Requires:	%{libBulletInverseDynamicsUtils} = %{EVRD}
+Requires:	%{libGeometry} = %{EVRD}
+Requires:	%{libOpenCL} = %{EVRD}
+Requires:	%{libInverseDynamics} = %{EVRD}
+Requires:	%{libInverseDynamicsUtils} = %{EVRD}
 Requires:	%{libBulletDynamics} = %{EVRD}
 Requires:	%{libBulletFileLoader} = %{EVRD}
 Requires:	%{libBulletSoftBody} = %{EVRD}
