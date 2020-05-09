@@ -238,7 +238,7 @@ and Rigid Body Dynamics Library for games and animation.
 This package provides one of Bullet shared libraries.
 
 %files -n %{libOpenCL}
-%{_libdir}/libBullet3OpenCL.so.%{major}
+%{_libdir}/libBullet3OpenCL_clew.so.%{major}
 
 
 #----------------------------------------------------------------------------
