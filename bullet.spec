@@ -387,7 +387,7 @@ sed -i 's|obj2sdf||' Extras/CMakeLists.txt
 %cmake \
     -DBUILD_BULLET2_DEMOS=OFF \
     -DBUILD_CPU_DEMOS=OFF \
-    -DBUILD_EXTRAS=ON \
+    -DBUILD_EXTRAS=OFF \
     -DBUILD_OPENGL3_DEMOS=OFF \
     -DBUILD_UNIT_TESTS=OFF \
     -DINSTALL_EXTRA_LIBS=ON \
