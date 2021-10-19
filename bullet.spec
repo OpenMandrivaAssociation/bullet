@@ -1,10 +1,10 @@
-%define major 2.89
+%define major 3.17
 #define	_disable_lto %{nil}
 #define _disable_ld_no_undefined 1
 
 Summary:	Professional 3D collision detection library
 Name:		bullet
-Version:	2.89
+Version:	3.17
 Release:	1
 License:	Zlib
 Group:		System/Libraries
