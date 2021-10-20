@@ -5,7 +5,7 @@
 Summary:	Professional 3D collision detection library
 Name:		bullet
 Version:	3.17
-Release:	1
+Release:	2
 License:	Zlib
 Group:		System/Libraries
 URL:		http://www.bulletphysics.com
@@ -130,7 +130,6 @@ sed -i 's|obj2sdf||' Extras/CMakeLists.txt
     -DBUILD_CONVEX_DECOMPOSITION_EXTRA=OFF \
     -DBUILD_HACD_EXTRA=OFF \
     -DBUILD_GIMPACTUTILS_EXTRA=OFF \
-    -DUSE_DOUBLE_PRECISION=ON \
     -DINCLUDE_INSTALL_DIR=%{_includedir}/%{name}
 %make_build
 
