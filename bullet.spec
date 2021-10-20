@@ -130,6 +130,7 @@ sed -i 's|obj2sdf||' Extras/CMakeLists.txt
     -DBUILD_CONVEX_DECOMPOSITION_EXTRA=OFF \
     -DBUILD_HACD_EXTRA=OFF \
     -DBUILD_GIMPACTUTILS_EXTRA=OFF \
+    -DUSE_DOUBLE_PRECISION=ON \
     -DINCLUDE_INSTALL_DIR=%{_includedir}/%{name}
 %make_build
 
