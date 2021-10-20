@@ -184,7 +184,7 @@ and Rigid Body Dynamics Library for games and animation.
 This package provides one of Bullet shared libraries.
 
 %files -n %{libConvexDecomposition}
-%{_libdir}/libConvexDecomposition.so.%{major}
+#{_libdir}/libConvexDecomposition.so.%{major}
 
 #----------------------------------------------------------------------------
 
