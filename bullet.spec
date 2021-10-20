@@ -166,7 +166,7 @@ and Rigid Body Dynamics Library for games and animation.
 This package provides one of Bullet shared libraries.
 
 %files -n %{libBulletWorldImporter}
-%{_libdir}/libBulletWorldImporter.so.%{major}
+#{_libdir}/libBulletWorldImporter.so.%{major}
 
 #----------------------------------------------------------------------------
 
