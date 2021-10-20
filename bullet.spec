@@ -129,7 +129,7 @@ and Rigid Body Dynamics Library for games and animation.
 This package provides one of Bullet shared libraries.
 
 %files -n %{libBulletFileLoader}
-%{_libdir}/libBulletFileLoader.so.%{major}
+#{_libdir}/libBulletFileLoader.so.%{major}
 %{_libdir}/libBullet2FileLoader.so.%{major}
 
 #----------------------------------------------------------------------------
