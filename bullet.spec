@@ -15,7 +15,7 @@ Source0:	https://github.com/bulletphysics/bullet3/archive/%{version}/%{name}3-%{
 Patch0:         bullet-2.89-fix-bullet.pc.patch
 # https://github.com/bulletphysics/bullet3/issues/1489
 #Patch1:         bullet-2.87-disable-underlinked-bulletrobotics.patch
-#Patch2:         use-system-libs.patch
+Patch2:         use-system-libs.patch
 
 BuildRequires:	cmake
 BuildRequires:	libtool
@@ -27,7 +27,7 @@ BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(glut)
 BuildRequires:  pkgconfig(freeglut)
 BuildRequires:	pkgconfig(libxml-2.0)
-#BuildRequires:	pkgconfig(tinyxml2)
+BuildRequires:	pkgconfig(tinyxml2)
 
 %description
 Bullet 3D Game Multiphysics Library provides state of the art
@@ -120,6 +120,7 @@ sed -i 's|obj2sdf||' Extras/CMakeLists.txt
     -DBUILD_OPENGL3_DEMOS=OFF \
     -DBUILD_UNIT_TESTS=OFF \
     -DINSTALL_EXTRA_LIBS=ON \
+    -DOpenGL_GL_PREFERENCE=GLVND
     -DINCLUDE_INSTALL_DIR=%{_includedir}/%{name}
 %make_build
 
