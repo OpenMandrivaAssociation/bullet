@@ -120,7 +120,7 @@ sed -i 's|obj2sdf||' Extras/CMakeLists.txt
     -DBUILD_OPENGL3_DEMOS=OFF \
     -DBUILD_UNIT_TESTS=OFF \
     -DINSTALL_EXTRA_LIBS=ON \
-    -DOpenGL_GL_PREFERENCE=GLVND
+    -DOpenGL_GL_PREFERENCE=GLVND \
     -DINCLUDE_INSTALL_DIR=%{_includedir}/%{name}
 %make_build
 
