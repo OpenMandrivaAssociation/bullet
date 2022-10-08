@@ -4,8 +4,8 @@
 
 Summary:	Professional 3D collision detection library
 Name:		bullet
-Version:	3.17
-Release:	2
+Version:	3.24
+Release:	1
 License:	Zlib
 Group:		System/Libraries
 URL:		http://www.bulletphysics.com
